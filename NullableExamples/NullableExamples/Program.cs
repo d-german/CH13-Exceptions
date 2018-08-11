@@ -1,16 +1,23 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
-namespace NullableExamples
+internal class Program
 {
-    internal class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-            string s1 = null;
-            var s2 = s1 ?? "nothing"; // s2 evaluates to "nothing"
+        string s1 = null;
+        var s2 = s1 ?? "nothing"; // s2 evaluates to "nothing"
 
-            StringBuilder sb = null;
-            var s = sb?.ToString().ToUpper() ?? "nothing"; // No error; s instead evaluates to "nothing"
+        StringBuilder sb = null;
+        var s = sb?.ToString().ToUpper() ?? "nothing"; // s evaluates to "nothing"
+
+        StringBuilder sb2 = new StringBuilder("Hello World");
+        int? length = s?.Length;
+
+        if (length.HasValue)
+        {
+            Console.WriteLine(length.Value);
         }
+        Console.WriteLine(length.GetValueOrDefault());
     }
 }
