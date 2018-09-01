@@ -1,51 +1,45 @@
 ﻿// Fig. 13.2: DivideByZeroExceptionHandling.cs
 // FormatException and DivideByZeroException handlers.
+
 using System;
 
-class DivideByZeroExceptionHandling
+internal class DivideByZeroExceptionHandling
 {
-   static void Main(string[] args)
-   {
-      var continueLoop = true; // determines whether to keep looping
+    private static void Main(string[] args)
+    {
+        var continueLoop = true; // determines whether to keep looping
 
-      do
-      {
-         // retrieve user input and calculate quotient                   
-         try
-         {
-            // int.Parse generates FormatException                    
-            // if argument cannot be converted to an integer          
+        do
+        {
             Console.Write("Enter an integer numerator: ");
-            var numerator = int.Parse(Console.ReadLine());
-            Console.Write("Enter an integer denominator: ");
-            var denominator = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out var numerator))
+            {
+                Console.WriteLine("You must enter two integers. Please try again.\n");
+                continue;
+            }
 
-            // division generates DivideByZeroException               
-            // if denominator is 0                                    
+            Console.Write("Enter an integer denominator: ");
+            if (!int.TryParse(Console.ReadLine(), out var denominator))
+            {
+                Console.WriteLine("You must enter two integers. Please try again.\n");
+                continue;
+            }
+
+            if (denominator == 0)
+            {
+                Console.WriteLine("Zero is an invalid denominator. Please try again.\n");
+                continue;
+            }
+                                  
             var result = numerator / denominator;
 
             // display result                                         
             Console.WriteLine(
-               $"\nResult: {numerator} / {denominator} = {result}");
+                $"\nResult: {numerator} / {denominator} = {result}");
             continueLoop = false;
-         }
-         catch (FormatException formatException)
-         {
-            Console.WriteLine($"\n{formatException.Message}");
-            Console.WriteLine(
-               "You must enter two integers. Please try again.\n");
-         }
-         catch (DivideByZeroException divideByZeroException)
-         {
-            Console.WriteLine($"\n{divideByZeroException.Message}");
-            Console.WriteLine(
-               "Zero is an invalid denominator. Please try again.\n");
-         }
-      } while (continueLoop);
-   }
+        } while (continueLoop);
+    }
 }
-
-
 
 
 /**************************************************************************
@@ -62,4 +56,3 @@ class DivideByZeroExceptionHandling
  * consequential damages in connection with, or arising out of, the       *
  * furnishing, performance, or use of these programs.                     *
  **************************************************************************/
-
