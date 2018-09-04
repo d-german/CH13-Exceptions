@@ -10,29 +10,40 @@ namespace Lab03
 
             do
             {
-                Console.Write("Enter a value for miles: ");
-                if (!double.TryParse(Console.ReadLine(), out var miles))
+                try
                 {
-                    Console.WriteLine("You must enter two integers. Please try again.\n");
-                    continue;
+	                Console.Write("Enter a value for miles: ");
+	                if (!double.TryParse(Console.ReadLine(), out var miles))
+	                {
+	                    Console.WriteLine("You must enter two integers. Please try again.\n");
+	                    continue;
+	                }
+	
+	                Console.Write("Enter a value for gallons: ");
+	                if (!double.TryParse(Console.ReadLine(), out var gallons))
+	                {
+	                    Console.WriteLine("You must enter two integers. Please try again.\n");
+	                    continue;
+	                }
+	
+	                var mpg = new MilesPerGallon {Miles = miles, Gallons = gallons}.Mpg;
+	
+	              
+	               // var result = miles / gallons;
+	
+	                // display result                                         
+	                Console.WriteLine(
+	                    $"\nResult: {miles} / {gallons} = {mpg} mpg");
+	                continueLoop = false;
                 }
-
-                Console.Write("Enter a value for gallons: ");
-                if (!double.TryParse(Console.ReadLine(), out var gallons))
+                catch (NegativeNumberException ex)
                 {
-                    Console.WriteLine("You must enter two integers. Please try again.\n");
-                    continue;
+                    Console.WriteLine("You must enter only positive values. Please try again.\n");
                 }
-
-                var mpg = new MilesPerGallon {Miles = miles, Gallons = gallons}.Mpg;
-
-              
-               // var result = miles / gallons;
-
-                // display result                                         
-                Console.WriteLine(
-                    $"\nResult: {miles} / {gallons} = {mpg} mpg");
-                continueLoop = false;
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    Console.WriteLine("Gallons must be > zero. Please try again.\n");
+                }
             } while (continueLoop);
         }
     }
