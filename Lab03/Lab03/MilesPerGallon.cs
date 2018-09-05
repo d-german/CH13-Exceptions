@@ -7,7 +7,10 @@ namespace Lab03
         private double _gallons;
         private double _miles;
 
-        public double Mpg => Miles / Gallons;
+        public double Mpg
+        {
+            get { return Miles / Gallons; }
+        }
 
         public double Miles
         {
